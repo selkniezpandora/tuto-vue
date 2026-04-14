@@ -1,23 +1,19 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 
-//Stores
+const name = ref('Samy');
+const age = ref(20);
 
-//Props
 
-//Refs
-
-//Models
-
-//Emits
-
-//Computeds
-
-//Functions
+function incrementAge() {
+    age.value++;
+}
 
 </script>
 
 <template>
 <h2>Coucou !</h2>
+  {{ name }} a {{ incrementAge() }} ans.
 </template>
 
 <style scoped>
