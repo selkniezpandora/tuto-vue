@@ -10,18 +10,9 @@ export default {
     };
   },
   methods: {
-    add(){
-      this.counter++;
+    helloWorld(){
+      console.log("Hello World");
     },
-
-    less(){
-      this.counter--;
-    },
-    position(e: { clientX: number; clientY: number; }){
-      this.x = e.clientX;
-      this.y = e.clientY;
-    }
-
   },
 
 };
@@ -29,13 +20,8 @@ export default {
 </script>
 
 <template>
-
-  <p>Compteur : {{counter}} </p>
-  <button @click="add">+</button>
-  <button @click="less">-</button>
-
-  <p>Position : {{ x }}, {{ y }}</p>
-  <div class="box" @mousemove="position"></div>
+  <button @click="helloWorld">Hello World !</button>
+  <div @:click.once="helloWorld" class="box"></div>
 </template>
 
 <style scoped>
