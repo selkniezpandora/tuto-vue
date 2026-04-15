@@ -16,6 +16,10 @@ const selectedSubject = ref(SUBJECTS[0]);
 const grades = ref<GradeEntry[]>([]);
 const isSubmitted = ref(false);
 
+// Filtres
+const searchQuery = ref('');
+const filterSubject = ref('Toutes');
+
 const loadGrades = () => {
   const saved = localStorage.getItem('tuto-vue-grades');
   if (saved) {
@@ -86,6 +90,21 @@ const getGradeClass = (g: number) => {
   if (g >= 10) return 'grade-medium';
   return 'grade-low';
 };
+
+const filteredGrades = computed(() => {
+  return grades.value.filter(entry => {
+    const matchesSearch = entry.studentName.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchesSubject = filterSubject.value === 'Toutes' || entry.subject === filterSubject.value;
+    return matchesSearch && matchesSubject;
+  });
+});
+
+const capitalize = (value: string) => {
+  if (!value) return '';
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+};
+
 </script>
 
 <template>
@@ -141,14 +160,37 @@ const getGradeClass = (g: number) => {
         </div>
       </div>
 
+      <div v-if="grades.length > 0" class="filters-section">
+        <div class="filter-group">
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Rechercher un élève..."
+            class="search-input"
+          >
+        </div>
+        <div class="filter-group">
+          <select v-model="filterSubject" class="select-filter">
+            <option value="Toutes">Toutes les matières</option>
+            <option v-for="subj in SUBJECTS" :key="subj" :value="subj">
+              {{ subj }}
+            </option>
+          </select>
+        </div>
+      </div>
+
       <div v-if="grades.length === 0" class="empty-state">
         <p>Aucune note enregistrée pour le moment.</p>
       </div>
 
+      <div v-else-if="filteredGrades.length === 0" class="empty-state">
+        <p>Aucun résultat pour ces filtres.</p>
+      </div>
+
       <div v-else class="grades-list">
-        <div v-for="entry in grades" :key="entry.id" class="grade-item">
+        <div v-for="entry in filteredGrades" :key="entry.id" class="grade-item">
           <div class="grade-info">
-            <span class="student-name">{{ entry.studentName }} : {{ entry.subject }}</span>
+            <span class="student-name">{{ capitalize(entry.studentName) }} : {{ entry.subject }}</span>
             <span class="grade-date">{{ entry.date }}</span>
           </div>
           <div class="grade-actions">
@@ -272,6 +314,35 @@ input.is-invalid {
   font-weight: 600;
   font-size: 0.9rem;
   border: 1px solid #e2e8f0;
+}
+
+.filters-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #f8fafc;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.filter-group {
+  flex: 1;
+}
+
+.search-input, .select-filter {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #dfe6e9;
+  font-size: 0.9rem;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.search-input:focus, .select-filter:focus {
+  outline: none;
+  border-color: #42b983;
 }
 
 .grades-list {
