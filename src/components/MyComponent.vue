@@ -5,13 +5,16 @@ export default {
   data() {
     return {
       name: "Jean",
+      age: 20,
+      googleUrl: "https://www.google.com",
+      imageUrl: "https://picsum.photos/200/300",
     };
   },
   methods: {
     calc(a: number, b: number): number {
       return a + b;
     },
-    func() {
+    nameUppercase() {
       return this.name.toUpperCase();
     }
   },
@@ -21,9 +24,12 @@ export default {
 </script>
 
 <template>
-<h2>Coucou !</h2>
+
+  <h2>Coucou !</h2>
   {{ name }} a {{ calc(20, 5) }} ans.
-  {{ func() }}
+  {{ nameUppercase() }}
+  <a :href="googleUrl">Google</a>
+  <img :src="imageUrl" alt="Image" />
 
 </template>
 
