@@ -28,6 +28,12 @@ const navigateTo = (path: string) => {
         <p>Organisez votre journée avec notre Todo List intuitive. Filtrez, ajoutez et supprimez vos tâches en un clic.</p>
       </div>
 
+      <div class="feature-card" @click="navigateTo('/grades')">
+        <div class="feature-icon">🎓</div>
+        <h3>Suivi des Notes</h3>
+        <p>Gérez les notes de vos élèves (0-20), visualisez la liste complète et calculez automatiquement la moyenne.</p>
+      </div>
+
       <div class="feature-card" @click="navigateTo('/counter')">
         <div class="feature-icon">🔢</div>
         <h3>Interactifs</h3>
