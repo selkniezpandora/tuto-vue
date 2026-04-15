@@ -1,63 +1,56 @@
 <script setup lang="ts">
-import MyComponent from "./components/MyComponent.vue";
-import TodoList from "./components/TodoList.vue";
-import RegistrationForm from "./components/RegistrationForm.vue";
+import { RouterView } from 'vue-router';
+import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-  <div class="app-wrapper">
-    <header>
-      <h1>Mon Application Vue</h1>
-    </header>
-    <main>
-      <div class="components-grid">
-        <MyComponent />
-        <TodoList />
-        <RegistrationForm />
-      </div>
+  <div class="app-shell">
+    <Navbar />
+    <main class="main-content">
+      <RouterView />
     </main>
   </div>
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary-color: #42b983;
+  --secondary-color: #35495e;
+  --bg-color: #f8fafc;
+  --text-color: #2c3e50;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background-color: #f5f7fa;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family),serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-shell {
   min-height: 100vh;
-}
-
-.app-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-header h1 {
-  color: #2c3e50;
-  font-size: 2.5rem;
-  font-weight: 700;
-}
-
-.components-grid {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: center;
 }
 
-@media (min-width: 1024px) {
-  .components-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    align-items: start;
-    justify-content: center;
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: 0 1rem 2rem;
   }
 }
 </style>
