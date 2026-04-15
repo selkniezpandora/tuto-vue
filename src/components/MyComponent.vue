@@ -4,19 +4,24 @@ export default {
   name: "MyComponent",
   data() {
     return {
-      name: "Jean",
-      age: 20,
-      googleUrl: "https://www.google.com",
-      imageUrl: "https://picsum.photos/200/300",
+      counter: 0,
+      x: 0,
+      y: 0,
     };
   },
   methods: {
-    calc(a: number, b: number): number {
-      return a + b;
+    add(){
+      this.counter++;
     },
-    nameUppercase() {
-      return this.name.toUpperCase();
+
+    less(){
+      this.counter--;
+    },
+    position(e: { clientX: number; clientY: number; }){
+      this.x = e.clientX;
+      this.y = e.clientY;
     }
+
   },
 
 };
@@ -25,14 +30,21 @@ export default {
 
 <template>
 
-  <h2>Coucou !</h2>
-  {{ name }} a {{ calc(20, 5) }} ans.
-  {{ nameUppercase() }}
-  <a :href="googleUrl">Google</a>
-  <img :src="imageUrl" alt="Image" />
+  <p>Compteur : {{counter}} </p>
+  <button @click="add">+</button>
+  <button @click="less">-</button>
 
+  <p>Position : {{ x }}, {{ y }}</p>
+  <div class="box" @mousemove="position"></div>
 </template>
 
 <style scoped>
+
+.box{
+  width: 300px;
+  height: 300px;
+  background: salmon;
+}
+
 
 </style>
