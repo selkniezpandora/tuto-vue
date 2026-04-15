@@ -10,9 +10,13 @@ export default {
     };
   },
   methods: {
-    helloWorld() {
-      console.log("Hello World");
+    increment() {
       this.counter++;
+    },
+    decrement() {
+      if (this.counter > 0) {
+        this.counter--;
+      }
     },
     updateCoords(event: MouseEvent) {
       this.x = event.offsetX;
@@ -30,13 +34,14 @@ export default {
       <h2>Interactivité de base</h2>
       <p class="counter">Compteur: <span>{{ counter }}</span></p>
 
-      <button @click="helloWorld" class="btn">
-        Cliquez-moi !
-      </button>
+      <div class="counter-controls">
+        <button @click="decrement" class="btn-circle" :disabled="counter <= 0">-</button>
+        <button @click="increment" class="btn-circle">+</button>
+      </div>
 
       <div class="box-container">
         <p>Position de la souris (x: {{ x }}, y: {{ y }})</p>
-        <div @mousemove="updateCoords" @click.once="helloWorld" class="box">
+        <div @mousemove="updateCoords" @click.once="increment" class="box">
           Survolez-moi
         </div>
       </div>
@@ -79,24 +84,42 @@ h2 {
   color: #2c3e50;
 }
 
-.btn {
-  background-color: #42b983;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s;
+.counter-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
   margin-bottom: 20px;
 }
 
-.btn:hover {
+.btn-circle {
+  background-color: #42b983;
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(66, 185, 131, 0.3);
+}
+
+.btn-circle:hover {
   background-color: #3aa876;
 }
 
-.btn:active {
-  transform: scale(0.98);
+.btn-circle:active {
+  transform: scale(0.95);
+}
+
+.btn-circle:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .box-container {
