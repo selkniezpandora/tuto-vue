@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MyComponent from "./components/MyComponent.vue";
 import TodoList from "./components/TodoList.vue";
+import RegistrationForm from "./components/RegistrationForm.vue";
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import TodoList from "./components/TodoList.vue";
       <div class="components-grid">
         <MyComponent />
         <TodoList />
+        <RegistrationForm />
       </div>
     </main>
   </div>
@@ -51,8 +53,10 @@ header h1 {
 
 @media (min-width: 1024px) {
   .components-grid {
-    flex-direction: row;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    align-items: start;
     justify-content: center;
   }
 }
